@@ -1,5 +1,10 @@
 # Changelog
 
+## ma-auto-anchors-v1.0.1 - 2026-07-11
+
+- Moved Border and Center shortcuts to Unity's global Shortcut Manager.
+- Shortcuts now work when a `RectTransform` is selected in the Hierarchy or Inspector, without Scene view focus.
+
 ## ma-auto-anchors-v1.0.0 - 2026-07-11
 
 - Initial public UPM release.

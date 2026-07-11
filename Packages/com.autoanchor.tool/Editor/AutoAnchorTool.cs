@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using UnityEditor;
+using UnityEditor.ShortcutManagement;
 using UnityEngine;
 
 namespace AutoAnchor.Editor
@@ -11,16 +12,24 @@ namespace AutoAnchor.Editor
         private const string MenuRoot = "Tools/AutoAnchor/";
         private const string AnchorToBoundsUndoName = "AutoAnchor Border";
         private const string AnchorToCenterUndoName = "AutoAnchor Center";
+        internal const string BorderShortcutId = "AutoAnchor/Border";
+        internal const string CenterShortcutId = "AutoAnchor/Center";
 
         static AutoAnchorTool()
         {
-            SceneView.duringSceneGui += HandleSceneViewShortcut;
+            EditorApplication.delayCall += AutoAnchorShortcutBindings.ApplyConfiguredShortcuts;
         }
 
         [MenuItem(MenuRoot + "Border", false, 1000)]
         public static void AnchorToBounds()
         {
             ApplyToSelection(AnchorMode.Bounds);
+        }
+
+        [Shortcut(BorderShortcutId, KeyCode.LeftBracket, ShortcutModifiers.Shift)]
+        private static void AnchorToBoundsShortcut()
+        {
+            AnchorToBounds();
         }
 
         [MenuItem(MenuRoot + "Border", true)]
@@ -35,6 +44,12 @@ namespace AutoAnchor.Editor
             ApplyToSelection(AnchorMode.Center);
         }
 
+        [Shortcut(CenterShortcutId, KeyCode.RightBracket, ShortcutModifiers.Shift)]
+        private static void AnchorToCenterShortcut()
+        {
+            AnchorToCenter();
+        }
+
         [MenuItem(MenuRoot + "Center", true)]
         private static bool CanAnchorToCenter()
         {
@@ -45,39 +60,9 @@ namespace AutoAnchor.Editor
         private static void CreateConfiguration()
         {
             var config = AutoAnchorConfigResolver.GetOrCreateConfig();
+            AutoAnchorShortcutBindings.Apply(config);
             Selection.activeObject = config;
             EditorGUIUtility.PingObject(config);
-        }
-
-        private static void HandleSceneViewShortcut(SceneView sceneView)
-        {
-            var currentEvent = Event.current;
-            if (currentEvent == null || currentEvent.type != EventType.KeyDown || !HasRectTransformSelection())
-            {
-                return;
-            }
-
-            var config = AutoAnchorConfigResolver.FindConfigOrDefault();
-            if (Matches(currentEvent, config.AnchorToBoundsShortcut))
-            {
-                AnchorToBounds();
-                currentEvent.Use();
-            }
-            else if (Matches(currentEvent, config.AnchorToCenterShortcut))
-            {
-                AnchorToCenter();
-                currentEvent.Use();
-            }
-        }
-
-        private static bool Matches(Event currentEvent, AutoAnchorShortcut shortcut)
-        {
-            return shortcut != null && shortcut.Matches(
-                currentEvent.keyCode,
-                currentEvent.shift,
-                currentEvent.control,
-                currentEvent.alt,
-                currentEvent.command);
         }
 
         private static void ApplyToSelection(AnchorMode mode)
@@ -178,13 +163,6 @@ namespace AutoAnchor.Editor
 
     internal static class AutoAnchorConfigResolver
     {
-        private static AutoAnchorConfig _defaultConfig;
-
-        internal static AutoAnchorConfig FindConfigOrDefault()
-        {
-            return FindConfig() ?? GetDefaultConfig();
-        }
-
         internal static AutoAnchorConfig FindConfig()
         {
             var configGuids = AssetDatabase.FindAssets("t:AutoAnchorConfig");
@@ -211,17 +189,67 @@ namespace AutoAnchor.Editor
             AssetDatabase.SaveAssets();
             return config;
         }
+    }
 
-        private static AutoAnchorConfig GetDefaultConfig()
+    internal static class AutoAnchorShortcutBindings
+    {
+        internal static void ApplyConfiguredShortcuts()
         {
-            if (_defaultConfig != null)
+            var config = AutoAnchorConfigResolver.FindConfig();
+            if (config != null)
             {
-                return _defaultConfig;
+                Apply(config);
+            }
+        }
+
+        internal static void Apply(AutoAnchorConfig config)
+        {
+            Rebind(AutoAnchorTool.BorderShortcutId, config.AnchorToBoundsShortcut);
+            Rebind(AutoAnchorTool.CenterShortcutId, config.AnchorToCenterShortcut);
+        }
+
+        private static void Rebind(string shortcutId, AutoAnchorShortcut shortcut)
+        {
+            if (shortcut == null)
+            {
+                return;
             }
 
-            _defaultConfig = ScriptableObject.CreateInstance<AutoAnchorConfig>();
-            _defaultConfig.hideFlags = HideFlags.HideAndDontSave;
-            return _defaultConfig;
+            var binding = new ShortcutBinding(new KeyCombination(shortcut.Key, ToModifiers(shortcut)));
+            try
+            {
+                ShortcutManager.instance.RebindShortcut(shortcutId, binding);
+            }
+            catch (InvalidOperationException)
+            {
+                Debug.LogWarning("AutoAnchor could not update the active Unity shortcut profile. Create or select a writable profile in Edit/Shortcuts.");
+            }
+        }
+
+        private static ShortcutModifiers ToModifiers(AutoAnchorShortcut shortcut)
+        {
+            var modifiers = ShortcutModifiers.None;
+            if (shortcut.Shift)
+            {
+                modifiers |= ShortcutModifiers.Shift;
+            }
+
+            if (shortcut.Control)
+            {
+                modifiers |= ShortcutModifiers.Control;
+            }
+
+            if (shortcut.Alt)
+            {
+                modifiers |= ShortcutModifiers.Alt;
+            }
+
+            if (shortcut.Command)
+            {
+                modifiers |= ShortcutModifiers.Action;
+            }
+
+            return modifiers;
         }
     }
 }

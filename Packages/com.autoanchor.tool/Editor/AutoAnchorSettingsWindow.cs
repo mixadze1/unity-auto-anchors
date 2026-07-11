@@ -48,6 +48,7 @@ namespace AutoAnchor.Editor
             if (_serializedConfig.ApplyModifiedProperties())
             {
                 EditorUtility.SetDirty(_config);
+                AutoAnchorShortcutBindings.Apply(_config);
             }
 
             GUILayout.FlexibleSpace();
@@ -59,6 +60,7 @@ namespace AutoAnchor.Editor
                     _config.ResetShortcuts();
                     EditorUtility.SetDirty(_config);
                     _serializedConfig.Update();
+                    AutoAnchorShortcutBindings.Apply(_config);
                 }
 
                 if (GUILayout.Button(new GUIContent("Select asset", "Select the AutoAnchorConfig ScriptableObject in the Project window.")))
