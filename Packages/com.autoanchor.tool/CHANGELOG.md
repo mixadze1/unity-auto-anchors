@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.4 - 2026-07-11
+
+- Added Unity-version, GitHub Release, and MIT license badges to the documentation.
+- Added the MIT License to the repository and distributable UPM package.
+
 ## 1.0.3 - 2026-07-11
 
 - Renamed the public package to `com.mixadze.autoanchor`.
