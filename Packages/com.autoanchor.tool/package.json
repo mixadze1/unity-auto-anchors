@@ -1,6 +1,6 @@
 {
   "name": "com.autoanchor.tool",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "displayName": "Auto Anchor Tool",
   "description": "Editor tools for placing UI RectTransform anchors on bounds or at the element center.",
   "unity": "2022.3",
