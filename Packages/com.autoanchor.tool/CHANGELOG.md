@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.3 - 2026-07-11
+
+- Renamed the public package to `com.mixadze.autoanchor`.
+- Added a dedicated `upm` branch so the package can be installed directly from Git.
+
 ## ma-auto-anchors-v1.0.2 - 2026-07-11
 
 - Added public installation and usage documentation.

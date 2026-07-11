@@ -9,12 +9,14 @@ Add the following entry to the target project's `Packages/manifest.json`:
 ```json
 {
   "dependencies": {
-    "com.autoanchor.tool": "https://github.com/mixadze1/unity-auto-anchors.git?path=/Packages/com.autoanchor.tool#ma-auto-anchors-v1.0.2"
+    "com.mixadze.autoanchor": "https://github.com/mixadze1/unity-auto-anchors.git#upm"
   }
 }
 ```
 
-The `#ma-auto-anchors-v1.0.2` suffix pins the package to this release. Omit it only when you intentionally want the latest default-branch version.
+The `upm` branch contains only the package files at the repository root, so no
+`?path=` suffix is required. Install a specific release by replacing `upm` with a
+tag created from the same package branch.
 
 ## Commands
 

@@ -2,19 +2,20 @@
 
 Auto Anchor is a lightweight Unity Editor package for positioning UI `RectTransform` anchors without changing the element's visible bounds.
 
-## Install the latest release
+## Install from Git
 
 Add this dependency to the target project's `Packages/manifest.json`:
 
 ```json
 {
   "dependencies": {
-    "com.autoanchor.tool": "https://github.com/mixadze1/unity-auto-anchors.git?path=/Packages/com.autoanchor.tool#ma-auto-anchors-v1.0.2"
+    "com.mixadze.autoanchor": "https://github.com/mixadze1/unity-auto-anchors.git#upm"
   }
 }
 ```
 
-Unity Package Manager downloads the package from the tagged release. Reopen Unity or open Package Manager to resolve it.
+Unity Package Manager downloads the package from the dedicated `upm` branch. Reopen
+Unity or open Package Manager to resolve it.
 
 ## Commands
 
