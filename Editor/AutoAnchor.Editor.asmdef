@@ -1,0 +1,10 @@
+{
+  "name": "AutoAnchor.Editor",
+  "rootNamespace": "AutoAnchor.Editor",
+  "references": [
+    "AutoAnchor.Runtime"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ]
+}
