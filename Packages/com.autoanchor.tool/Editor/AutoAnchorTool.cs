@@ -8,54 +8,43 @@ namespace AutoAnchor.Editor
     [InitializeOnLoad]
     public static class AutoAnchorTool
     {
-        private const string MenuRoot = "Tools/Auto Anchor/";
-        private const string AnchorToBoundsUndoName = "Anchor to Bounds";
-        private const string AnchorToCenterUndoName = "Anchor to Center";
+        private const string MenuRoot = "Tools/AutoAnchor/";
+        private const string AnchorToBoundsUndoName = "AutoAnchor Border";
+        private const string AnchorToCenterUndoName = "AutoAnchor Center";
 
         static AutoAnchorTool()
         {
             SceneView.duringSceneGui += HandleSceneViewShortcut;
         }
 
-        [MenuItem(MenuRoot + "Anchor to Bounds", false, 1000)]
+        [MenuItem(MenuRoot + "Border", false, 1000)]
         public static void AnchorToBounds()
         {
             ApplyToSelection(AnchorMode.Bounds);
         }
 
-        [MenuItem(MenuRoot + "Anchor to Bounds", true)]
+        [MenuItem(MenuRoot + "Border", true)]
         private static bool CanAnchorToBounds()
         {
             return HasRectTransformSelection();
         }
 
-        [MenuItem(MenuRoot + "Anchor to Center", false, 1001)]
+        [MenuItem(MenuRoot + "Center", false, 1001)]
         public static void AnchorToCenter()
         {
             ApplyToSelection(AnchorMode.Center);
         }
 
-        [MenuItem(MenuRoot + "Anchor to Center", true)]
+        [MenuItem(MenuRoot + "Center", true)]
         private static bool CanAnchorToCenter()
         {
             return HasRectTransformSelection();
         }
 
-        [MenuItem(MenuRoot + "Create Configuration", false, 1100)]
+        [MenuItem(MenuRoot + "Create Configuration", false, 1101)]
         private static void CreateConfiguration()
         {
-            var existingConfig = AutoAnchorConfigResolver.FindConfig();
-            if (existingConfig != null)
-            {
-                Selection.activeObject = existingConfig;
-                EditorGUIUtility.PingObject(existingConfig);
-                return;
-            }
-
-            var config = ScriptableObject.CreateInstance<AutoAnchorConfig>();
-            var path = AssetDatabase.GenerateUniqueAssetPath("Assets/AutoAnchorConfig.asset");
-            AssetDatabase.CreateAsset(config, path);
-            AssetDatabase.SaveAssets();
+            var config = AutoAnchorConfigResolver.GetOrCreateConfig();
             Selection.activeObject = config;
             EditorGUIUtility.PingObject(config);
         }
@@ -96,12 +85,12 @@ namespace AutoAnchor.Editor
             var rectTransforms = Selection.transforms.OfType<RectTransform>().ToArray();
             if (rectTransforms.Length == 0)
             {
-                Debug.LogWarning("Auto Anchor: select at least one RectTransform.");
+                Debug.LogWarning("AutoAnchor: select at least one RectTransform.");
                 return;
             }
 
             var appliedCount = rectTransforms.Count(rectTransform => Apply(rectTransform, mode));
-            Debug.Log($"Auto Anchor: {mode} applied to {appliedCount} RectTransform(s).");
+            Debug.Log($"AutoAnchor: {mode} applied to {appliedCount} RectTransform(s).");
         }
 
         private static bool Apply(RectTransform rectTransform, AnchorMode mode)
@@ -109,14 +98,14 @@ namespace AutoAnchor.Editor
             var parent = rectTransform.parent as RectTransform;
             if (parent == null)
             {
-                Debug.LogError($"Auto Anchor failed: '{rectTransform.name}' has no RectTransform parent.");
+                Debug.LogError($"AutoAnchor failed: '{rectTransform.name}' has no RectTransform parent.");
                 return false;
             }
 
             var parentRect = parent.rect;
             if (Mathf.Approximately(parentRect.width, 0f) || Mathf.Approximately(parentRect.height, 0f))
             {
-                Debug.LogError($"Auto Anchor failed: '{parent.name}' parent size is zero.");
+                Debug.LogError($"AutoAnchor failed: '{parent.name}' parent size is zero.");
                 return false;
             }
 
@@ -206,6 +195,21 @@ namespace AutoAnchor.Editor
 
             var configPath = AssetDatabase.GUIDToAssetPath(configGuids.OrderBy(guid => guid, StringComparer.Ordinal).First());
             return AssetDatabase.LoadAssetAtPath<AutoAnchorConfig>(configPath);
+        }
+
+        internal static AutoAnchorConfig GetOrCreateConfig()
+        {
+            var existingConfig = FindConfig();
+            if (existingConfig != null)
+            {
+                return existingConfig;
+            }
+
+            var config = ScriptableObject.CreateInstance<AutoAnchorConfig>();
+            var path = AssetDatabase.GenerateUniqueAssetPath("Assets/AutoAnchorConfig.asset");
+            AssetDatabase.CreateAsset(config, path);
+            AssetDatabase.SaveAssets();
+            return config;
         }
 
         private static AutoAnchorConfig GetDefaultConfig()
