@@ -9,12 +9,12 @@ Add the following entry to the target project's `Packages/manifest.json`:
 ```json
 {
   "dependencies": {
-    "com.autoanchor.tool": "https://github.com/mixadze1/unity-auto-anchors.git?path=/Packages/com.autoanchor.tool#ma-auto-anchors-v1.0.1"
+    "com.autoanchor.tool": "https://github.com/mixadze1/unity-auto-anchors.git?path=/Packages/com.autoanchor.tool#ma-auto-anchors-v1.0.2"
   }
 }
 ```
 
-The `#ma-auto-anchors-v1.0.1` suffix pins the package to this release. Omit it only when you intentionally want the latest default-branch version.
+The `#ma-auto-anchors-v1.0.2` suffix pins the package to this release. Omit it only when you intentionally want the latest default-branch version.
 
 ## Commands
 
@@ -24,6 +24,8 @@ The `#ma-auto-anchors-v1.0.1` suffix pins the package to this release. Omit it o
 | `Tools/AutoAnchor/Center` | `Shift+]` | Collapses both anchors to the selected element's geometric center in its parent while preserving its visible bounds. |
 
 Shortcuts use Unity's global Shortcut Manager, so they work with the Hierarchy, Inspector, Scene view, or another editor window focused, as long as at least one `RectTransform` is selected.
+
+Both commands support multi-object selection: every selected `RectTransform` is processed independently in one action.
 
 ## Configuration
 

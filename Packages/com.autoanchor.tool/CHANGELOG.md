@@ -1,5 +1,10 @@
 # Changelog
 
+## ma-auto-anchors-v1.0.2 - 2026-07-11
+
+- Added public installation and usage documentation.
+- Documented multi-object `RectTransform` selection support.
+
 ## ma-auto-anchors-v1.0.1 - 2026-07-11
 
 - Moved Border and Center shortcuts to Unity's global Shortcut Manager.
