@@ -9,12 +9,12 @@ Add the following entry to the target project's `Packages/manifest.json`:
 ```json
 {
   "dependencies": {
-    "com.autoanchor.tool": "https://github.com/mixadze1/unity-auto-anchors.git?path=/Packages/com.autoanchor.tool"
+    "com.autoanchor.tool": "https://github.com/mixadze1/unity-auto-anchors.git?path=/Packages/com.autoanchor.tool#ma-auto-anchors-v1.0.0"
   }
 }
 ```
 
-Pin a release by appending `#<tag>` to the URL once releases are published.
+The `#ma-auto-anchors-v1.0.0` suffix pins the package to this release. Omit it only when you intentionally want the latest default-branch version.
 
 ## Commands
 
