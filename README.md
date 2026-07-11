@@ -25,8 +25,8 @@ Add this dependency to the target project's `Packages/manifest.json`:
 Unity Package Manager downloads the package from the dedicated `upm` branch. Reopen
 Unity or open Package Manager to resolve it.
 
-To pin a production build, replace `upm` with a release tag, for example
-`ma-auto-anchors-v1.0.4`.
+To pin a production build, replace `upm` with the desired Auto Anchor Tool version
+from the [Releases](https://github.com/mixadze1/unity-auto-anchors/releases) page.
 
 ## Commands
 
@@ -59,11 +59,11 @@ Packages/com.autoanchor.tool/
 
 ## Releases
 
-- [ma-auto-anchors-v1.0.4](https://github.com/mixadze1/unity-auto-anchors/tree/ma-auto-anchors-v1.0.4) — MIT licensing and package documentation badges.
-- [ma-auto-anchors-v1.0.3](https://github.com/mixadze1/unity-auto-anchors/tree/ma-auto-anchors-v1.0.3) — dedicated `upm` branch and the public package name `com.mixadze.autoanchor`.
-- [ma-auto-anchors-v1.0.2](https://github.com/mixadze1/unity-auto-anchors/tree/ma-auto-anchors-v1.0.2) — public documentation and multi-object workflow.
-- [ma-auto-anchors-v1.0.1](https://github.com/mixadze1/unity-auto-anchors/tree/ma-auto-anchors-v1.0.1) — global editor shortcuts and settings integration.
-- [ma-auto-anchors-v1.0.0](https://github.com/mixadze1/unity-auto-anchors/tree/ma-auto-anchors-v1.0.0) — initial package release.
+- [Auto Anchor Tool v1.0.4](https://github.com/mixadze1/unity-auto-anchors/tree/ma-auto-anchors-v1.0.4) — MIT licensing and package documentation badges.
+- [Auto Anchor Tool v1.0.3](https://github.com/mixadze1/unity-auto-anchors/tree/ma-auto-anchors-v1.0.3) — dedicated `upm` branch and the public package name `com.mixadze.autoanchor`.
+- [Auto Anchor Tool v1.0.2](https://github.com/mixadze1/unity-auto-anchors/tree/ma-auto-anchors-v1.0.2) — public documentation and multi-object workflow.
+- [Auto Anchor Tool v1.0.1](https://github.com/mixadze1/unity-auto-anchors/tree/ma-auto-anchors-v1.0.1) — global editor shortcuts and settings integration.
+- [Auto Anchor Tool v1.0.0](https://github.com/mixadze1/unity-auto-anchors/tree/ma-auto-anchors-v1.0.0) — initial package release.
 
 ## License
 
