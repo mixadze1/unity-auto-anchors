@@ -48,6 +48,7 @@ Packages/com.autoanchor.tool/
 
 ## Releases
 
+- [ma-auto-anchors-v1.0.3](https://github.com/mixadze1/unity-auto-anchors/tree/ma-auto-anchors-v1.0.3) — dedicated `upm` branch and the public package name `com.mixadze.autoanchor`.
 - [ma-auto-anchors-v1.0.2](https://github.com/mixadze1/unity-auto-anchors/tree/ma-auto-anchors-v1.0.2) — public documentation and multi-object workflow.
 - [ma-auto-anchors-v1.0.1](https://github.com/mixadze1/unity-auto-anchors/tree/ma-auto-anchors-v1.0.1) — global editor shortcuts and settings integration.
 - [ma-auto-anchors-v1.0.0](https://github.com/mixadze1/unity-auto-anchors/tree/ma-auto-anchors-v1.0.0) — initial package release.
