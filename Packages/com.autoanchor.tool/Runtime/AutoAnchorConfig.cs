@@ -6,26 +6,44 @@ namespace AutoAnchor
     [CreateAssetMenu(fileName = "AutoAnchorConfig", menuName = "Auto Anchor/Configuration")]
     public sealed class AutoAnchorConfig : ScriptableObject
     {
+        [Header("Scene View shortcuts")]
+        [Tooltip("Runs Tools/AutoAnchor/Border. Default: Shift+[")]
         [SerializeField] private AutoAnchorShortcut _anchorToBoundsShortcut = new AutoAnchorShortcut(KeyCode.LeftBracket, true);
+
+        [Tooltip("Runs Tools/AutoAnchor/Center. Default: Shift+]")]
         [SerializeField] private AutoAnchorShortcut _anchorToCenterShortcut = new AutoAnchorShortcut(KeyCode.RightBracket, true);
 
         public AutoAnchorShortcut AnchorToBoundsShortcut => _anchorToBoundsShortcut;
         public AutoAnchorShortcut AnchorToCenterShortcut => _anchorToCenterShortcut;
 
-        private void Reset()
+        public void ResetShortcuts()
         {
             _anchorToBoundsShortcut = new AutoAnchorShortcut(KeyCode.LeftBracket, true);
             _anchorToCenterShortcut = new AutoAnchorShortcut(KeyCode.RightBracket, true);
+        }
+
+        private void Reset()
+        {
+            ResetShortcuts();
         }
     }
 
     [Serializable]
     public sealed class AutoAnchorShortcut
     {
+        [Tooltip("The non-modifier key in the shortcut.")]
         [SerializeField] private KeyCode _key;
+
+        [Tooltip("Requires Shift to be held.")]
         [SerializeField] private bool _shift;
+
+        [Tooltip("Requires Control to be held.")]
         [SerializeField] private bool _control;
+
+        [Tooltip("Requires Alt to be held.")]
         [SerializeField] private bool _alt;
+
+        [Tooltip("Requires Command to be held on macOS.")]
         [SerializeField] private bool _command;
 
         public KeyCode Key => _key;
