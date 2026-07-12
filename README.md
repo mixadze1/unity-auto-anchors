@@ -10,6 +10,10 @@ Auto Anchor is a lightweight Unity Editor package for positioning UI `RectTransf
 - **Multi-object selection** — processes every selected `RectTransform` independently.
 - **ScriptableObject configuration** — rebind shortcuts from `Tools/AutoAnchor/Settings`.
 
+## Demo
+
+[![Watch the Auto Anchor Tool demo](https://img.youtube.com/vi/HGjGVJIh_3Q/hqdefault.jpg)](https://youtu.be/HGjGVJIh_3Q)
+
 ## Installation
 
 Add this dependency to the target project's `Packages/manifest.json`:
